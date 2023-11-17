@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -82,7 +80,7 @@ https://templatemo.com/tm-577-liberty-market
     </div>
 </header>
 
-            <nav class="navbar navbar-expand-lg">
+                   <nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="index.html">Phyo's Network Live</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -848,15 +846,61 @@ https://templatemo.com/tm-577-liberty-market
     </div>
 </div>
 
+
+
+<?php
+error_reporting(1);
+include("connection.php");
+
+// Assuming $conn is your MySQLi connection
+$result = mysqli_query($conn, "SELECT * FROM items");
+
+while ($arr = mysqli_fetch_array($result)) {
+    echo "<div class='col-lg-3'>
+              <div class='item'>
+                <div class='row'>
+                  <div class='col-lg-12'>
+                    <span class='author'>
+                      <img src='admin/up_images/{$arr['img']}' alt='no image' style='max-width: 50px; max-height: 50px; border-radius: 50%;'>
+                    </span>
+                    <img src='admin/up_images/{$arr['img']}' alt='no image' style='border-radius: 20px;'>
+                    <h4>{$arr['prod_no']}</h4>
+                  </div>
+                  <div class='col-lg-12'>
+                    <div class='line-dec'></div>
+                    <div class='row'>
+                      <div class='col-6'>
+                        <span>Current Bid: <br> <strong>{$arr['price']} ETH</strong></span>
+                      </div>
+                      <div class='col-6'>
+                        <span>Ends In: <br> <strong>{$arr['end_date']}</strong></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class='col-lg-12'>
+                    <div class='main-button'>
+                       <a href='product_order.php?id={$arr['id']}&img={$arr['img']}&price={$arr['price']}'>View Details</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>";
+}
+?>
+
           </div>
         </div>
       </div>
     </div>
   </div>
   
-  
 
-  <footer>
+
+   
+
+
+
+<footer>
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
@@ -867,7 +911,6 @@ https://templatemo.com/tm-577-liberty-market
       </div>
     </div>
   </footer>
-
   <!-- Scripts -->
   <!-- Bootstrap core JavaScript -->
   <script src="js/jquery.min.js"></script>

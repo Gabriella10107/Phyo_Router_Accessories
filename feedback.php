@@ -27,20 +27,21 @@ if (isset($_POST['submit'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Hash the password
     $mobile = $_POST['mobile'];
     $suggestion = $_POST['suggestion'];
 
     // Use prepared statements to prevent SQL injection
     $stmt = $conn->prepare("INSERT INTO review (name, email, password, mobile, suggestion) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $name, $email, $password, $mobile, $suggestion);
+    $stmt->bind_param("sssss", $name, $email, $hashedPassword, $mobile, $suggestion);
 
     if ($stmt->execute()) {
         // Redirect to a success page or wherever you want
         header("Location: success.html");
         exit;
     } else {
-        // Display an error message
-        $error = "Error: " . $stmt->error;
+        // Display a general error message
+        $error = "Error submitting the form. Please try again later.";
     }
 
     // Close the prepared statement
@@ -101,7 +102,7 @@ https://templatemo.com/tm-583-festava-live
     </div>
 </header>
 
-            <nav class="navbar navbar-expand-lg">
+                   <nav class="navbar navbar-expand-lg bg-dark">
     <div class="container">
         <a class="navbar-brand" href="index.html">Phyo's Network Live</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,22 +126,11 @@ https://templatemo.com/tm-583-festava-live
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="feedback.php">Feedback</a>
                 </li>
-            </ul>
-
-            <?php 
-                
-                if (isset($_SESSION['email']) && isset($_SESSION['password'])) {
-                    echo "<a href='profile.php' class='btn btn-primary d-lg-block d-none me-2'><i class='fas fa-user'></i> My Account</a>";
-                } else {
-                    echo "
-                    <a class='btn btn-primary me-2' href='register.php'>Register</a>
-                    <a class='btn btn-success' href='login.php'>Login</a>
-                    ";
-                }
-            ?>
+           </ul>
         </div>
     </div>
 </nav>
+
 
 
 

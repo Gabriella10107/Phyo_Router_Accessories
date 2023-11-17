@@ -74,12 +74,12 @@ https://templatemo.com/tm-583-festava-live
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5 ">
+            <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="about.php">About</a>
+                    <a class="nav-link click-scroll" href="about.html">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="product.php">Product</a>
@@ -90,22 +90,16 @@ https://templatemo.com/tm-583-festava-live
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="feedback.php">Feedback</a>
                 </li>
+                <li class="nav-item">
+                    <a href='logout.php' class='btn btn-primary d-lg-block d-none me-2'><i class='fas fa-user'></i> Admin</a>";
+                </li>
             </ul>
 
-            <?php 
-                session_start();
-                if (isset($_SESSION['email']) && isset($_SESSION['password'])) {
-                    echo "<a href='profile.php' class='btn btn-primary d-lg-block d-none me-2'><i class='fas fa-user'></i> My Account</a>";
-                } else {
-                    echo "
-                    <a class='btn btn-primary me-2' href='register.php'>Register</a>
-                    <a class='btn btn-success' href='login.php'>Login</a>
-                    ";
-                }
-            ?>
+           
         </div>
     </div>
 </nav>
+
 
 
 

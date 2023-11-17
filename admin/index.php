@@ -1,12 +1,15 @@
 <?php
 session_start();
 
-// Check if the user is not logged in (i.e., not authenticated)
+// Check if the user is not logged in
 if (!isset($_SESSION['email']) || !isset($_SESSION['password'])) {
-    header("Location: login.php"); // Redirect to the login page
+    header("Location: login.php"); // Redirect to login.php if not logged in
     exit();
 }
+
+// If logged in, you can proceed with your index.php content
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -91,7 +94,7 @@ https://templatemo.com/tm-583-festava-live
                     <a class="nav-link click-scroll" href="product.php">Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_4">Services</a>
+                    <a class="nav-link click-scroll" href="services.php">Services</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="feedback.php">Feedback</a>

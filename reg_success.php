@@ -63,6 +63,8 @@
     <h2>Registration Successful</h2>
     <p>You have successfully registered. You are now logged in.</p>
     <div class="toy">🚀</div> <!-- Replace with the toy or emoji you want to use -->
+    <a href="index.php">Gome To Home Page :)</a>
   </div>
+
 </body>
 </html>

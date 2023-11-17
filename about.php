@@ -91,7 +91,7 @@ https://templatemo.com/tm-527-sided
     </header>
 
     <!-- Navbar from the first code -->
-              <nav class="navbar navbar-expand-lg">
+                   <nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="index.html">Phyo's Network Live</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -131,6 +131,7 @@ https://templatemo.com/tm-527-sided
         </div>
     </div>
 </nav>
+
 
     <div class="ppp">
       <!-- Logo & Intro -->

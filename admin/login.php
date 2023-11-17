@@ -15,13 +15,15 @@ if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Query the database to check if there's at least one matching user
-    $sql = "SELECT * FROM admin WHERE email = '$email' AND password = '$password'";
-    $result = mysqli_query($conn, $sql);
+    // Use prepared statements to prevent SQL injection
+    $stmt = $conn->prepare("SELECT * FROM admin WHERE email = ? AND password = ?");
+    $stmt->bind_param("ss", $email, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if (mysqli_num_rows($result) > 0) {
+    if ($result->num_rows > 0) {
         // Fetch the first row (if there are multiple matching rows)
-        $row = mysqli_fetch_assoc($result);
+        $row = $result->fetch_assoc();
 
         // Set session variables based on the fetched row
         $_SESSION['email'] = $row['email'];
@@ -33,8 +35,14 @@ if (isset($_POST['login'])) {
     } else {
         $error_message = "Invalid email or password. Please try again.";
     }
+
+    $stmt->close();
 }
+
+// Close the database connection
+mysqli_close($conn);
 ?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">

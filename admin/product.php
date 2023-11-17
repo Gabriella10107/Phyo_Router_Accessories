@@ -72,6 +72,32 @@ https://templatemo.com/tm-577-liberty-market
 }
 
 
+
+
+    
+.create-btn {
+  background-color: #28a745; /* Green */
+  color: white;
+}
+
+.delete-btn {
+  
+  background-color: #dc3545; /* Red */
+  color: black;
+
+}
+
+  .item {
+    height: 400px; /* Set a fixed height for each item div */
+    overflow: hidden; /* Hide any content that exceeds the fixed height */
+  }
+
+  .item img {
+    width: 100%; /* Make sure the image takes up 100% of the div width */
+    height: auto; /* Maintain the image's aspect ratio */
+    display: block; /* Remove any extra spacing below the image */
+    margin: 0 auto; /* Center the image horizontally */
+  }
 </style>
   </head>
 
@@ -93,16 +119,13 @@ https://templatemo.com/tm-577-liberty-market
     </div>
 </header>
 
-<nav class="navbar navbar-expand-lg bg-dark">
+                         <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="index.html">
-            Festava Live
-        </a>
-    
+        <a class="navbar-brand" href="index.html">Phyo's Network Live</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-    
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav align-items-lg-center ms-auto me-lg-5">
                 <li class="nav-item">
@@ -115,22 +138,24 @@ https://templatemo.com/tm-577-liberty-market
                     <a class="nav-link click-scroll" href="product.php">Product</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="">Services</a>
+                    <a class="nav-link click-scroll" href="services.php">Services</a>
                 </li>
-                
                 <li class="nav-item">
                     <a class="nav-link click-scroll" href="feedback.php">Feedback</a>
                 </li>
-
-               
-                
+                <li class="nav-item">
+                    <a href='logout.php' class='btn btn-primary d-lg-block d-none me-2'><i class='fas fa-user'></i> Admin</a>";
+                </li>
             </ul>
-    
-            
 
+           
         </div>
     </div>
 </nav>
+
+
+
+
 
   <!-- ***** Header Area End ***** -->
 
@@ -138,6 +163,13 @@ https://templatemo.com/tm-577-liberty-market
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
+
+<div class="container mt-3">
+    <a href="create.php"><button class="btn create-btn mx-2">Create</button></a>
+    <a href="view_order.php"><button class="btn btn-primary mx-2">View Order</button></a>
+    <a href="delete.php"><button class="btn delete-btn mx-2">Delete</button></a>
+</div>
+
           <h6>Liberty NFT Market</h6>
           <h2>Discover Some Top Items</h2>
           <span><a href="#">Home </a> >>==<a href="#">Explore</a></span>
@@ -826,6 +858,9 @@ https://templatemo.com/tm-577-liberty-market
             </div>
           </div>
         </div>
+
+
+
         <div class="col-lg-3">
           <div class="item">
             <div class="row">
@@ -855,11 +890,70 @@ https://templatemo.com/tm-577-liberty-market
             </div>
           </div>
         </div>
+
+
+
+<?php
+error_reporting(1);
+// Establish a database connection (assuming you have a file named connection.php)
+include("connection.php");
+
+// Select all records from the 'items' table
+$result = mysqli_query($conn, "SELECT * FROM items");
+
+// Check if the query was successful
+if (!$result) {
+    die("Query failed: " . mysqli_error($conn));
+}
+
+// Loop through each row in the result set
+while ($arr = mysqli_fetch_array($result)) {
+    $imagePath = 'up_images/' . $arr['img'];
+
+    // Displaying the HTML with the image and other information
+    echo "<div class='col-lg-3'>
+              <div class='item'>
+                <div class='row'>
+                  <div class='col-lg-12'>
+                    <span class='author'>
+                      <img src='$imagePath' alt='{$arr['prod_no']}' style='max-width: 50px; max-height: 50px; border-radius: 50%;'>
+                    </span>
+                    <img src='$imagePath' alt='{$arr['prod_no']}'>
+                    <h4>{$arr['prod_no']}</h4>
+                  </div>
+                  <div class='col-lg-12'>
+                    <div class='line-dec'></div>
+                    <div class='row'>
+                      <div class='col-6'>
+                        <span>Current Bid: <br> <strong>{$arr['price']} ETH</strong></span>
+                      </div>
+                      <div class='col-6'>
+                        <span>Ends In: <br> <strong>{$arr['end_date']}</strong></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class='col-lg-12'>
+                    <div class='main-button'>
+                      <a href='login_check.php'>View Details</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>";
+}
+
+// Close the database connection
+mysqli_close($conn);
+?>
+
+
+
       </div>
     </div>
   </div>
   
-  
+
+
 
   <footer>
     <div class="container">
@@ -891,3 +985,4 @@ https://templatemo.com/tm-577-liberty-market
 
   </body>
 </html>
+

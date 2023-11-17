@@ -1,109 +1,107 @@
 <?php
-	error_reporting(1);
-	
-	include("connection.php");
-	
-	if($_REQUEST['log']=='out')
-	{
-		session_destroy();
-		header("location:index.php");
-	}
+// Assuming order_sent.php is the correct file name
+error_reporting(1);
+session_start();
+include("connection.php");
+
+// Retrieve order number from the URL
+$orderNo = $_GET['order_no'];
+
+// Fetch order details from the database based on the order number using a prepared statement
+$queryGetOrderDetails = "SELECT * FROM orders WHERE order_no = ?";
+$stmt = mysqli_prepare($conn, $queryGetOrderDetails);
+mysqli_stmt_bind_param($stmt, "s", $orderNo);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$orderDetails = mysqli_fetch_assoc($result);
+
+// Check if order details are found
+if (!$orderDetails) {
+    // Handle the case where order details are not found
+    echo "Order details not found.";
+    exit;
+}
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Wood Stock - Gallery</title>
-<meta name="keywords" content="" />
-<meta name="description" content="" />
-<!--
-Template 2066 Wood Stock
-http://www.tooplate.com/view/2066-wood-stock
--->
-<link href="tooplate_style.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
 
-<script type="text/JavaScript" src="js/jquery-1.6.3.js"></script> 
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #343a40;
+            color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-top: 50px;
+        }
 
-<link rel="stylesheet" href="css/slimbox2.css" type="text/css" media="screen" /> 
-<script type="text/JavaScript" src="js/slimbox2.js"></script> 
+        h2 {
+            text-align: center;
+            color: #007bff;
+        }
 
-<link rel="stylesheet" href="css/nivo-slider.css" type="text/css" media="screen" />
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
 
+        li {
+            margin-bottom: 10px;
+        }
+
+        .go-to-homepage-btn {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .go-to-homepage-btn a {
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .go-to-homepage-btn a:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
 
-<div id="tooplate_wrapper">
-	<div id="tooplate_header">
-    	<a href="index.html" class="sitetitle">PlayStation</a>
-        <div id="tooplate_menu">
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="product.php" class="selected">Product</a></li>
-                <li><a href="register.php">Register</a></li>
-                <li><a href="contact.php">Contact</a></li>
-            </ul>
-        </div> <!-- end of tooplate_menu -->
-    </div> <!-- END of header -->
-    <div id="tooplate_main">
-    	
-      <h2><span>Thank you for shopping with us</span></h2>
-          <p><font color="blue"><i>Order sent successfully!</i></font></p>
-		  <p>Your order no. is <?php echo "<font size='4' color='blue'>".$_REQUEST['order_no']."</font>";?></p>
-		  <p>Thank you. Please come again.</p>
-		  <br><br>
-		  <p><a href="?log=out">Log out</a></p> 
-        
-        
+    <!-- Your HTML content here -->
+    <div class="container">
+        <h2>Order Confirmation</h2>
 
-        <div class="clear"></div>
-    </div>
-    <div style="display:none;" class="nav_up" id="nav_up"></div>
-</div> <!-- END of tooplate_wrapper -->
+        <!-- Display order details -->
+        <p>Thank you for your order! Your order details:</p>
+        <ul>
+            <li><strong>Order Number:</strong> <?php echo $orderDetails['order_no']; ?></li>
+            <li><strong>Full Name:</strong> <?php echo $orderDetails['fullName']; ?></li>
+            <li><strong>Email:</strong> <?php echo $orderDetails['email']; ?></li>
+            <!-- Add more order details as needed -->
+        </ul>
 
-<div id="tooplate_footer_wrapper">
-	<div id="tooplate_footer">
-    	<div class="col_4">
-        	
-            <ul class="nobullet bottom_list">
-            	<li><a href="index.php">Home</a></li>
-                <li><a href="product.php">Product</a></li>
-                <li><a href="register.php">Register</a></li>
-                <li><a href="contact.php">Contact</a></li>
-            </ul>
+        <!-- Go to homepage button -->
+        <div class="go-to-homepage-btn">
+            <a href="index.php">Go to Homepage</a>
         </div>
-        
-        
-        
-         
-        
-        <div class="clear"></div>
-        <div id="tooplate_copyright">
-			Copyright © 2048 Your Company Name 
-		</div>
-    </div> <!-- END of tooplate_footer -->
-</div> <!-- END of tooplate_footer_wrapper -->
+    </div>
 
-<script src="js/scroll-startstop.events.jquery.js" type="text/javascript"></script>
-<script type="text/javascript">
-	$(function() {
-		var $elem = $('#content');
-		
-		$('#nav_up').fadeIn('slow');
-		
-		$(window).bind('scrollstart', function(){
-			$('#nav_up,#nav_down').stop().animate({'opacity':'0.2'});
-		});
-		$(window).bind('scrollstop', function(){
-			$('#nav_up,#nav_down').stop().animate({'opacity':'1'});
-		});
-		
-		$('#nav_up').click(
-			function (e) {
-				$('html, body').animate({scrollTop: '0px'}, 800);
-			}
-		);
-	});
-</script>
+    <!-- Add your footer content here -->
+    <!-- ... -->
 
 </body>
 </html>
